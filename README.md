@@ -1,5 +1,7 @@
 # click-man
 
+*Under heavy development - feedback more than welcome!*
+
 It's never been easier to generate man pages for a python click CLI application:
 
 ```bash
