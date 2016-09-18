@@ -47,6 +47,5 @@ def write_man_pages(name, cli, parent_ctx=None, target_dir=None):
         f.write(man_page)
 
     commands = getattr(cli, 'commands', {})
-    print(commands)
     for name, command in commands.items():
         write_man_pages(name, command, parent_ctx=ctx, target_dir=target_dir)
