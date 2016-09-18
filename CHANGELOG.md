@@ -16,4 +16,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Please also see `git log`
 
 [Unreleased]: https://github.com/gabrielfalcao/sure/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/timofurrer/click-man/compare/30626839cc048856f799eb0bcd9e731fff4221dc...v0.1.0
+[v0.1.0]: https://github.com/timofurrer/click-man/compare/30626839cc048856f799eb0bcd9e731fff4221dc...v0.1.0
