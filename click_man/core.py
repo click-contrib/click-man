@@ -2,8 +2,9 @@
 click-man - Auto generate click documentations
 """
 
+import os
+
 import click
-from click.testing import CliRunner
 
 from .man import ManPage
 
@@ -27,7 +28,7 @@ def generate_man_page(ctx):
     return str(man_page)
 
 
-def write_man_pages(name, cli, parent_ctx=None):
+def write_man_pages(name, cli, parent_ctx=None, target_dir=None):
     """
     Generate man page files recursively
     for the given click cli function.
@@ -38,10 +39,14 @@ def write_man_pages(name, cli, parent_ctx=None):
     ctx = click.Context(cli, info_name=name, parent=parent_ctx)
 
     man_page = generate_man_page(ctx)
-    with open('{0}.man'.format(ctx.command_path.replace(' ', '-')), 'w+') as f:
+    path = '{0}.man'.format(ctx.command_path.replace(' ', '-'))
+    if target_dir:
+        path = os.path.join(target_dir, path)
+
+    with open(path, 'w+') as f:
         f.write(man_page)
 
     commands = getattr(cli, 'commands', {})
     print(commands)
     for name, command in commands.items():
-        write_man_pages(name, command, parent_ctx=ctx)
+        write_man_pages(name, command, parent_ctx=ctx, target_dir=target_dir)

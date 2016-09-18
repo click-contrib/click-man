@@ -1,3 +1,4 @@
+import os
 from distutils.core import Command
 from distutils.errors import DistutilsSetupError
 from pkg_resources import EntryPoint
@@ -12,14 +13,22 @@ __all__ = ['man_pages']
 class man_pages(Command):
     description = 'distutils command to generate man pages'
 
-    user_options = []
+    user_options = [
+        ('target=', 't', 'Target location for the man pages')
+    ]
     boolean_options = []
 
     def initialize_options(self):
-        pass
+        self.target = os.path.join(os.getcwd(), 'man')
 
     def finalize_options(self):
-        pass
+        self.target = os.path.abspath(self.target)
+
+        # create target directory if it does not exist yet
+        try:
+            os.makedirs(self.target)
+        except OSError:
+            pass
 
     def run(self):
         eps = EntryPoint.parse_map(self.distribution.entry_points or '')
@@ -33,4 +42,4 @@ class man_pages(Command):
         name, entry_point = console_scripts[0]
 
         cli = entry_point.resolve()
-        write_man_pages(name, cli)
+        write_man_pages(name, cli, target_dir=self.target)
