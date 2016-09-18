@@ -45,6 +45,9 @@ class ManPage(object):
         #  and the second one is the option's description
         self.options = []
 
+        #: Holds the commands for the man page
+        self.commands = []
+
     def __str__(self):
         """
         Show the string representation for
@@ -75,6 +78,14 @@ class ManPage(object):
             for option, description in self.options:
                 lines.append(self.INDENT_KEYWORDD)
                 lines.append(option.replace('-', r'\-'))
+                lines.append(description)
+
+        # write commands
+        if self.commands:
+            lines.append('{0} COMMANDS'.format(self.SECTION_HEADING_KEYWORD))
+            for name, description in self.commands:
+                lines.append(self.INDENT_KEYWORDD)
+                lines.append(name)
                 lines.append(description)
 
         return '\n'.join(lines)
