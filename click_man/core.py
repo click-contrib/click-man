@@ -15,8 +15,7 @@ def generate_man_page(ctx):
 
     :param Command command: the command to generate the documentation for.
     """
-    man_page = ManPage(ctx.command_path, ctx.command_path)
-    man_page.command_path = ctx.command_path
+    man_page = ManPage(ctx.command_path)
     man_page.short_help = ctx.command.short_help
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))

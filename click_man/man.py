@@ -21,15 +21,9 @@ class ManPage(object):
     BOLD_KEYWORD = '.B'
     INDENT_KEYWORDD = '.TP'
 
-    def __init__(self, name, title):
-        #: Holds the name for the man page
-        self.name = name
-
-        #: Holds the title for the man page
-        self.title = title
-
-        #: Holds the command path for the man page
-        self.command_path = self.name
+    def __init__(self, command):
+        #: Holds the command for the man page
+        self.command = command
 
         #: Holds the short help for the man page
         self.short_help = ''
@@ -57,15 +51,15 @@ class ManPage(object):
 
         # write title and footer
         lines.append('{0} {1} 1 "{2}" "{3} Manual"'.format(
-            self.TITLE_KEYWORD, self.title, '21-Feb-1994', self.name))
+            self.TITLE_KEYWORD, self.command, '21-Feb-1994', self.command))
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(r'{0} \- {1}'.format(self.title, self.short_help))
+        lines.append(r'{0} \- {1}'.format(self.command, self.short_help))
 
         # write synopsis
         lines.append('{0} SYNOPSIS'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append('{0} {1}'.format(self.BOLD_KEYWORD, self.command_path))
+        lines.append('{0} {1}'.format(self.BOLD_KEYWORD, self.command))
         lines.append(self.synopsis.replace('-', r'\-'))
 
         # write the description
