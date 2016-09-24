@@ -8,7 +8,7 @@ python:
 
 install:
     - python setup.py build sdist
-    - pip install -r requirements.txt
+    - pip install -r requirements-dev.txt
 
 script: nosetests --verbosity 2
 

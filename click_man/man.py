@@ -5,7 +5,7 @@ This module provides a formatter for debian
 man pages.
 """
 
-from __future__ import unicode_literals
+from datetime import datetime
 
 
 class ManPage(object):
@@ -42,6 +42,9 @@ class ManPage(object):
         #: Holds the commands for the man page
         self.commands = []
 
+        #: Holds the date for the man page creation time.
+        self.date = datetime.now().strftime("%d-%b-%Y")
+
     def __str__(self):
         """
         Show the string representation for
@@ -51,7 +54,7 @@ class ManPage(object):
 
         # write title and footer
         lines.append('{0} {1} 1 "{2}" "{3} Manual"'.format(
-            self.TITLE_KEYWORD, self.command, '21-Feb-1994', self.command))
+            self.TITLE_KEYWORD, self.command, self.date, self.command))
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))

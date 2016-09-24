@@ -1,0 +1,5 @@
+-r requirements.txt
+sure
+nose
+rednose
+coverage
