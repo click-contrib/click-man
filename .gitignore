@@ -11,3 +11,7 @@ __pycache__/
 # testing files
 .tox/
 .coverage
+
+# files generated for release
+dist/
+README.rst

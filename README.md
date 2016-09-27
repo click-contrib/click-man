@@ -35,13 +35,13 @@ The following sections describe different usage example for *click-man*.
 **click-man** provides a sane setuptools command extension which can be used like the following:
 
 ```bash
-python setup.py --command-packages=click_man.commands man_pages
+python3 setup.py --command-packages=click_man.commands man_pages
 ```
 
 or specify the man pages target directory:
 
 ```bash
-python setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
+python3 setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
 ```
 
 ### Debian packages
