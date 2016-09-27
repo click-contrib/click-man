@@ -1,8 +1,13 @@
 """
-click-man - Auto generate click documentations
+click-man - Generate man pages for click application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This module provides a formatter for debian
-man pages.
+This module provides functionality to
+write a man page from some given information
+about a CLI application.
+
+:copyright: (c) 2016 by Timo Furrer.
+:license: MIT, see LICENSE for more details.
 """
 
 from datetime import datetime
@@ -12,8 +17,7 @@ class ManPage(object):
     """
     Represent a man page
 
-    :param str name: the name of the man page
-    :param str title: the title for the man page
+    :param str command: the name of the command
     """
     TITLE_KEYWORD = '.TH'
     SECTION_HEADING_KEYWORD = '.SH'
@@ -22,33 +26,33 @@ class ManPage(object):
     INDENT_KEYWORDD = '.TP'
 
     def __init__(self, command):
-        #: Holds the command for the man page
+        #: Holds the command of the man page
         self.command = command
 
-        #: Holds the short help for the man page
+        #: Holds the short help of the man page
         self.short_help = ''
 
-        #: Holds the synopsis for the man page
+        #: Holds the synopsis of the man page
         self.synopsis = ''
 
-        #: Holds the description for the man page
+        #: Holds the description of the man page
         self.description = ''
 
-        #: Holds a list of tuple options for the man page
+        #: Holds a list of tuple options of the man page
         #  the first item in the tuple are the option switches
         #  and the second one is the option's description
         self.options = []
 
-        #: Holds the commands for the man page
+        #: Holds the commands of the man page
         self.commands = []
 
-        #: Holds the date for the man page creation time.
+        #: Holds the date of the man page creation time.
         self.date = datetime.now().strftime("%d-%b-%Y")
 
     def __str__(self):
         """
-        Show the string representation for
-        the man page.
+        Generate and return the string representation
+        of this man page.
         """
         lines = []
 

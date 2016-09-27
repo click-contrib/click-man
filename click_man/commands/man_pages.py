@@ -1,3 +1,14 @@
+"""
+click-man - Generate man pages for click application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This module provides a setuptools command to
+generate man pages from a click application.
+
+:copyright: (c) 2016 by Timo Furrer.
+:license: MIT, see LICENSE for more details.
+"""
+
 import os
 from distutils.core import Command
 from distutils.errors import DistutilsSetupError
@@ -31,6 +42,15 @@ class man_pages(Command):
             pass
 
     def run(self):
+        """
+        Generate man pages for the scripts defined in distutils setup().
+
+        The cli application is gathered from the setuptools setup()
+        function in setup.py.
+
+        The generated man pages are written to files in the directory given
+        by ``--target``.
+        """
         eps = EntryPoint.parse_map(self.distribution.entry_points or '')
 
         if 'console_scripts' not in eps or not eps['console_scripts']:
