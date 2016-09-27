@@ -4,3 +4,10 @@
 # python bytecode files
 *.pyc
 __pycache__/
+
+# setuptools files
+*.egg-info/
+
+# testing files
+.tox/
+.coverage
