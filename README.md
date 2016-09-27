@@ -2,7 +2,7 @@
 
 *Under heavy development - feedback more than welcome!*
 
-It's never been easier to generate man pages for a python click CLI application:
+Create **man pages** for click application as easy as this:
 
 ```bash
 pip install click_man
