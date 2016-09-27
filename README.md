@@ -1,33 +1,36 @@
 # click-man
 
-*Under heavy development - feedback more than welcome!*
+[![Build Status](https://travis-ci.org/timofurrer/click-man.svg?branch=master)](https://travis-ci.org/timofurrer/click-man) [![PyPI Package version](https://badge.fury.io/py/sure.svg)](https://pypi.python.org/pypi/click-man)
 
-Create **man pages** for click application as easy as this:
+Create **man pages** for [click](https://github.com/pallets/click) application as easy as this:
 
 ```bash
-pip install click_man
-python setup.py --command-packages=click_man.commands man_pages
+python3 setup.py --command-packages=click_man.commands man_pages
 ```
 
 ![Demo](https://raw.githubusercontent.com/timofurrer/click-man/master/docs/asciicast.gif)
 
+## What it does
 
-This will create a `man` folder with all the man pages generated for this click application.
-
-## How does it find my click application
-
-**click-man** finds the click application because you've defined it in the `entry_points` map in your `setup.py`.
+*click-man* will generate one man page per command from your click CLI application specified in `console_scripts` in your `setup.py`.
 
 ## Installation
 
-**click-man** is Python 2 and 3 compatible.
-
 ```bash
-pip install click-man
 pip3 install click-man
 ```
 
-## Invoke
+**click-man** is also available for Python 2:
+
+```bash
+pip install click-man
+```
+
+## Usage Recipes
+
+The following sections describe different usage example for *click-man*.
+
+### Use with setuptools
 
 **click-man** provides a sane setuptools command extension which can be used like the following:
 
@@ -40,3 +43,11 @@ or specify the man pages target directory:
 ```bash
 python setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
 ```
+
+### Debian packages
+
+*Coming soon ...*
+
+### Standalone
+
+*Coming soon ...*
