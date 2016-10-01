@@ -8,8 +8,6 @@ Create **man pages** for [click](https://github.com/pallets/click) application a
 python3 setup.py --command-packages=click_man.commands man_pages
 ```
 
-![Demo](https://raw.githubusercontent.com/timofurrer/click-man/master/docs/asciicast.gif)
-
 → Checkout the [debian packaging example](https://github.com/timofurrer/click-man#debian-packages)
 
 ## What it does
