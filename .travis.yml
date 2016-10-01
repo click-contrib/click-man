@@ -14,7 +14,7 @@ script: nosetests --verbosity 2
 
 deploy:
   provider: pypi
-  user: timofurrer
+  user: tuxtimo
   password:
     secure: eNrDuSAQuR0xVFb+ZfHZ93mZBEKGWNnidSHTM+8DkuA3OKGTD/Gf3TGAVLaqqURtChukopOANvoBqTWSHMXe6mDSiTn6cPpqxa7WBcOkF4yzzSVQ+ch/wjgpabzgi+XfT6tTo7KI8JYwgxg4NivN/Iv6uxzVqmc7hxwrSJbwruav1ddvonGb+I4M1LYcvUWTFEwlCvBxr+a9CdQ0+JHTtgdCF0T/71NwQJKmA7NtDaS6hex7kJY/CADBsowECURraB4jsbbqnw8sKUDsi6M5/aHSrC0KlpPrSxoESy4EFB7x77WVQxLTcTOqnQQ1ZazNc0g9YfZ7TqcH6cXjcAxqmx/rsmE9EDpauml4IySJWYvEyCMkS2LsqWZI4Em8t2MRO96Zoou3FPgabuUmwEpLlBIfLxTW+XDt2M3fa7wtHP4rIA3e6ruSmVitdC6gFG0nMdGIC/o6s/99Qqx/05eNm1BQ5PdFCzKyVg82mZsqyoSV/37qaVic3pDYIYmGpsm1G/pS4UdH9qGcjP8P0n/986EBAenOeExg9a53XoDms6C/mkeMqJHkJ6WrEKDmaFiUHWz2D3mFTdpL+xWnpOP/b/4/2XSQVh86z+5wW0iXb+wxMdmMSv9T8VBb5kDWj6/6D/y0V90k1i8d2pkmJ3sJAqWNBfw2pC5D03J7qH8zPdU=
   on:
