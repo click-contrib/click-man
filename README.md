@@ -10,6 +10,8 @@ python3 setup.py --command-packages=click_man.commands man_pages
 
 ![Demo](https://raw.githubusercontent.com/timofurrer/click-man/master/docs/asciicast.gif)
 
+→ Checkout the [debian packaging example](https://github.com/timofurrer/click-man#debian-packages)
+
 ## What it does
 
 *click-man* will generate one man page per command from your click CLI application specified in `console_scripts` in your `setup.py`.
@@ -84,8 +86,3 @@ override_dh_installman:
 ```
 
 Checkout a working example here: [repo debian package](https://github.com/timofurrer/click-man/tree/master/examples/debian_pkg)
-
-
-### Standalone
-
-*Coming soon ...*
