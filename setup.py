@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='click-man',
-    version='0.1.1',
+    version='0.2.0',
     license='MIT',
     description='Generate man pages for click based CLI applications',
     author='Timo Furrer',
