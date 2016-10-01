@@ -68,7 +68,23 @@ With setuptools and pip we face two problems:
 
 ### Debian packages
 
-*Coming soon ...*
+The `debhelper` packages provides a very convenient script called `dh_installman`.
+It checks for the `debian/(pkg_name.)manpages` file and it contents which is basically a line by line list of man pages or globs:
+
+```
+debian/tmp/manpages/*
+```
+
+We override the rule provided by `dh_installman` to generate our man pages in advance, like this:
+
+```Makefile
+override_dh_installman:
+	python3 setup.py --command-packages=click_man.commands man_pages --target debian/tmp/manpages
+	dh_installman -O--buildsystem=pybuild
+```
+
+Checkout a working example here: [repo debian package](https://github.com/timofurrer/click-man/tree/master/examples/debian_pkg)
+
 
 ### Standalone
 
