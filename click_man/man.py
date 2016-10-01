@@ -38,6 +38,9 @@ class ManPage(object):
         #: Holds the description of the man page
         self.description = ''
 
+        #: Holds the version of the man page
+        self.version = '1.0.0'
+
         #: Holds a list of tuple options of the man page
         #  the first item in the tuple are the option switches
         #  and the second one is the option's description
@@ -57,8 +60,8 @@ class ManPage(object):
         lines = []
 
         # write title and footer
-        lines.append('{0} {1} 1 "{2}" "{3} Manual"'.format(
-            self.TITLE_KEYWORD, self.command, self.date, self.command))
+        lines.append('{0} "{1}" "1" "{2}" "{3}" "{4} Manual"'.format(
+            self.TITLE_KEYWORD, self.command.upper(), self.date, self.version, self.command))
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))

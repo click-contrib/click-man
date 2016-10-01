@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=repo
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_installman:
+	python3 setup.py --command-packages=click_man.commands man_pages --target debian/tmp/manpages
+	dh_installman -O--buildsystem=pybuild

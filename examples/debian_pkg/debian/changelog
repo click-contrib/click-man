@@ -1,0 +1,5 @@
+repo (0.1.0) jessie; urgency=low
+
+  * Initial debian package build
+
+ -- Timo Furrer <tuxtimo@gmail.com>  Sat, 01 Oct 2016 13:23:45 +0200
