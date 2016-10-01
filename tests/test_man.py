@@ -15,7 +15,7 @@ def test_simple_man_page():
     man = ManPage('my-command')
     man.short_help = 'Command to test man pages for click.'
     man.date = '21-Feb-1994'
-    expect(str(man)).to.be.equal(""".TH my-command 1 "21-Feb-1994" "my-command Manual"
+    expect(str(man)).to.be.equal(""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
 .SH NAME
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
@@ -49,7 +49,7 @@ Boaa, richtig geili sach."""
         ('test', 'Pretend you are testing your code')
     ]
 
-    expect(str(man)).to.be.equal(""".TH my-command 1 "21-Feb-1994" "my-command Manual"
+    expect(str(man)).to.be.equal(""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
 .SH NAME
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
