@@ -25,12 +25,14 @@ class man_pages(Command):
     description = 'distutils command to generate man pages'
 
     user_options = [
-        ('target=', 't', 'Target location for the man pages')
+        ('target=', 't', 'Target location for the man pages'),
+        ('version=', 'v', 'Version of the CLI application')
     ]
     boolean_options = []
 
     def initialize_options(self):
         self.target = os.path.join(os.getcwd(), 'man')
+        self.version = ''
 
     def finalize_options(self):
         self.target = os.path.abspath(self.target)
@@ -64,4 +66,4 @@ class man_pages(Command):
         self.announce('Load entry point {0}'.format(name), level=2)
         cli = entry_point.resolve()
         self.announce('Generate man pages for {0}'.format(name), level=2)
-        write_man_pages(name, cli, target_dir=self.target)
+        write_man_pages(name, cli, version=self.version, target_dir=self.target)

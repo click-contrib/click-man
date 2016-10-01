@@ -4,7 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-*Nothing here yet*
+### Added
+- Allow to specify version via command line
+- Proof-of-concept for debian packaging
 
 ## [v0.1.1]
 ### Fixed

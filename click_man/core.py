@@ -16,7 +16,7 @@ import click
 from .man import ManPage
 
 
-def generate_man_page(ctx):
+def generate_man_page(ctx, version=None):
     """
     Generate documentation for the given command.
 
@@ -28,6 +28,7 @@ def generate_man_page(ctx):
     """
     # Create man page with the details from the given context
     man_page = ManPage(ctx.command_path)
+    man_page.version = version
     man_page.short_help = ctx.command.short_help
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
@@ -39,7 +40,7 @@ def generate_man_page(ctx):
     return str(man_page)
 
 
-def write_man_pages(name, cli, parent_ctx=None, target_dir=None):
+def write_man_pages(name, cli, parent_ctx=None, version=None, target_dir=None):
     """
     Generate man page files recursively
     for the given click cli function.
@@ -52,7 +53,7 @@ def write_man_pages(name, cli, parent_ctx=None, target_dir=None):
     """
     ctx = click.Context(cli, info_name=name, parent=parent_ctx)
 
-    man_page = generate_man_page(ctx)
+    man_page = generate_man_page(ctx, version)
     path = '{0}.1'.format(ctx.command_path.replace(' ', '-'))
     if target_dir:
         path = os.path.join(target_dir, path)
@@ -62,4 +63,4 @@ def write_man_pages(name, cli, parent_ctx=None, target_dir=None):
 
     commands = getattr(cli, 'commands', {})
     for name, command in commands.items():
-        write_man_pages(name, command, parent_ctx=ctx, target_dir=target_dir)
+        write_man_pages(name, command, parent_ctx=ctx, version=version, target_dir=target_dir)
