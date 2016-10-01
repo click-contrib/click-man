@@ -12,7 +12,7 @@ python3 setup.py --command-packages=click_man.commands man_pages
 
 ## What it does
 
-*click-man* will generate one man page per command from your click CLI application specified in `console_scripts` in your `setup.py`.
+*click-man* will generate one man page per command of your click CLI application specified in `console_scripts` in your `setup.py`.
 
 ## Installation
 
@@ -44,7 +44,7 @@ or specify the man pages target directory:
 python3 setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
 ```
 
-### Automatic man page installed with setuptools and pip
+### Automatic man page installation with setuptools and pip
 
 This approach of installing man pages is problematic for various reasons:
 
@@ -69,7 +69,7 @@ With setuptools and pip we face two problems:
 ### Debian packages
 
 The `debhelper` packages provides a very convenient script called `dh_installman`.
-It checks for the `debian/(pkg_name.)manpages` file and it contents which is basically a line by line list of man pages or globs:
+It checks for the `debian/(pkg_name.)manpages` file and it's content which is basically a line by line list of man pages or globs:
 
 ```
 debian/tmp/manpages/*
@@ -82,5 +82,9 @@ override_dh_installman:
 	python3 setup.py --command-packages=click_man.commands man_pages --target debian/tmp/manpages
 	dh_installman -O--buildsystem=pybuild
 ```
+
+Now we are able to build are debian package with the tool of your choice, e.g.:
+
+```debuild -us -uc```
 
 Checkout a working example here: [repo debian package](https://github.com/timofurrer/click-man/tree/master/examples/debian_pkg)
