@@ -44,6 +44,28 @@ or specify the man pages target directory:
 python3 setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
 ```
 
+### Automatic man page installed with setuptools and pip
+
+This approach of installing man pages is problematic for various reasons:
+
+#### (1) Man pages are a UNIX thing
+
+Python in general and with that pip and setuptools are aimed to be platform independent.
+Man pages are **not**: they are a UNIX thing which means setuptools does not provide a sane
+solution to generate and install man pages.
+We should consider using automatic man page installation only with vendor specific packaging, e.g. for `*.deb` or `*.rpm` packages.
+
+#### (2) We want to generate man pages on the fly
+
+First, we do not want to commit man pages to our source control.
+We want to generate them on the fly. Either
+during build or installation time.
+
+With setuptools and pip we face two problems:
+
+1. If we generate and install them during installation of the package pip does not know about the man pages and thus cannot uninstall it.
+2. If we generate them in our build process and add them to your distribution we do not have a way to prevent installation to */usr/share/man* for non-UNIX-like Operating Systems.
+
 ### Debian packages
 
 *Coming soon ...*
