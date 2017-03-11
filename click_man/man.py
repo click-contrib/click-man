@@ -81,15 +81,19 @@ class ManPage(object):
             lines.append('{0} OPTIONS'.format(self.SECTION_HEADING_KEYWORD))
             for option, description in self.options:
                 lines.append(self.INDENT_KEYWORDD)
-                lines.append(option.replace('-', r'\-'))
+                option_unpacked = option.replace('-', r'\-').split()
+                lines.append(r'\fB{0}\fP{1}'.format(option_unpacked[0], (' ' + ' '.join(option_unpacked[1:])) if len(option_unpacked) > 1 else ''))
                 lines.append(description)
 
         # write commands
         if self.commands:
             lines.append('{0} COMMANDS'.format(self.SECTION_HEADING_KEYWORD))
             for name, description in self.commands:
-                lines.append(self.INDENT_KEYWORDD)
-                lines.append(name)
-                lines.append(description)
+                lines.append(self.PARAGRAPH_KEYWORD)
+                lines.append(r'\fB{0}\fP'.format(name))
+                lines.append('  ' + description)
+                lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
+                    self.command, name))
+                lines.append('')
 
         return '\n'.join(lines)

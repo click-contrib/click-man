@@ -49,7 +49,7 @@ Boaa, richtig geili sach."""
         ('test', 'Pretend you are testing your code')
     ]
 
-    expect(str(man)).to.be.equal(""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
+    expect(str(man)).to.be.equal(r""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
 .SH NAME
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
@@ -63,18 +63,24 @@ multi line description of a click-man test.
 Boaa, richtig geili sach.
 .SH OPTIONS
 .TP
-\-\-yolo
+\fB\-\-yolo\fP
 Do it in yolo sytle
 .TP
-\-\-iambatman
+\fB\-\-iambatman\fP
 Make me think I am batman
 .SH COMMANDS
-.TP
-start
-Start it
-.TP
-stop
-Stop it
-.TP
-test
-Pretend you are testing your code""")
+.PP
+\fBstart\fP
+  Start it
+  See \fBmy-command-start(1)\fP for full documentation on the \fBstart\fP command.
+
+.PP
+\fBstop\fP
+  Stop it
+  See \fBmy-command-stop(1)\fP for full documentation on the \fBstop\fP command.
+
+.PP
+\fBtest\fP
+  Pretend you are testing your code
+  See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.
+""")
