@@ -65,7 +65,7 @@ class ManPage(object):
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(r'{0} \- {1}'.format(self.command, self.short_help))
+        lines.append(r'{0} \- {1}'.format(self.command.replace(' ', r'\-'), self.short_help))
 
         # write synopsis
         lines.append('{0} SYNOPSIS'.format(self.SECTION_HEADING_KEYWORD))
