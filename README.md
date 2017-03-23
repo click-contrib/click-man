@@ -1,6 +1,6 @@
 # click-man
 
-[![Build Status](https://travis-ci.org/timofurrer/click-man.svg?branch=master)](https://travis-ci.org/timofurrer/click-man) [![PyPI Package version](https://badge.fury.io/py/click-man.svg)](https://pypi.python.org/pypi/click-man)
+[![Build Status](https://travis-ci.org/click-contrib/click-man.svg?branch=master)](https://travis-ci.org/click-contrib/click-man) [![PyPI Package version](https://badge.fury.io/py/click-man.svg)](https://pypi.python.org/pypi/click-man)
 
 Create **man pages** for [click](https://github.com/pallets/click) application as easy as this:
 
