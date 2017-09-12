@@ -74,7 +74,7 @@ class ManPage(object):
 
         # write the description
         lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(self.description)  # FIXME: replace empty lines with PARAGRAPH_KEYWORD
+        lines.append(self.description or '')  # FIXME: replace empty lines with PARAGRAPH_KEYWORD
 
         # write the options
         if self.options:
@@ -91,7 +91,7 @@ class ManPage(object):
             for name, description in self.commands:
                 lines.append(self.PARAGRAPH_KEYWORD)
                 lines.append(r'\fB{0}\fP'.format(name))
-                lines.append('  ' + description)
+                lines.append('  ' + (description or ''))
                 lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
                     self.command, name))
                 lines.append('')
