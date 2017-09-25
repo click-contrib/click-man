@@ -80,8 +80,9 @@ class ManPage(object):
         lines.append(self.synopsis.replace('-', r'\-'))
 
         # write the description
-        lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(self.replace_blank_lines(self.description))
+        if self.description:
+            lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
+            lines.append(self.replace_blank_lines(self.description))
 
         # write the options
         if self.options:

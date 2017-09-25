@@ -20,8 +20,6 @@ def test_simple_man_page():
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
 .B my-command
-.PP
-.SH DESCRIPTION
 """)
 
 
