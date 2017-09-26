@@ -52,6 +52,13 @@ class ManPage(object):
         #: Holds the date of the man page creation time.
         self.date = datetime.now().strftime("%d-%b-%Y")
 
+    def replace_blank_lines(self, s):
+        ''' Find any blank lines and replace them with .PP '''
+
+        lines = map(lambda l: self.PARAGRAPH_KEYWORD if l == '' else l,
+                    s.split('\n'))
+        return '\n'.join(lines)
+
     def __str__(self):
         """
         Generate and return the string representation
@@ -73,8 +80,9 @@ class ManPage(object):
         lines.append(self.synopsis.replace('-', r'\-'))
 
         # write the description
-        lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(self.description or '')  # FIXME: replace empty lines with PARAGRAPH_KEYWORD
+        if self.description:
+            lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
+            lines.append(self.replace_blank_lines(self.description))
 
         # write the options
         if self.options:
@@ -83,7 +91,7 @@ class ManPage(object):
                 lines.append(self.INDENT_KEYWORDD)
                 option_unpacked = option.replace('-', r'\-').split()
                 lines.append(r'\fB{0}\fP{1}'.format(option_unpacked[0], (' ' + ' '.join(option_unpacked[1:])) if len(option_unpacked) > 1 else ''))
-                lines.append(description)
+                lines.append(self.replace_blank_lines(description))
 
         # write commands
         if self.commands:
@@ -91,9 +99,8 @@ class ManPage(object):
             for name, description in self.commands:
                 lines.append(self.PARAGRAPH_KEYWORD)
                 lines.append(r'\fB{0}\fP'.format(name))
-                lines.append('  ' + (description or ''))
+                lines.append('  ' + self.replace_blank_lines(description))
                 lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
                     self.command, name))
-                lines.append('')
 
         return '\n'.join(lines)

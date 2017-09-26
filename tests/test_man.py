@@ -20,8 +20,6 @@ def test_simple_man_page():
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
 .B my-command
-
-.SH DESCRIPTION
 """)
 
 
@@ -57,9 +55,9 @@ my-command \- Command to test man pages for click.
 [\-\-yolo] [\-\-iambatman]
 .SH DESCRIPTION
 This is my awesome
-
+.PP
 multi line description of a click-man test.
-
+.PP
 Boaa, richtig geili sach.
 .SH OPTIONS
 .TP
@@ -73,14 +71,11 @@ Make me think I am batman
 \fBstart\fP
   Start it
   See \fBmy-command-start(1)\fP for full documentation on the \fBstart\fP command.
-
 .PP
 \fBstop\fP
   Stop it
   See \fBmy-command-stop(1)\fP for full documentation on the \fBstop\fP command.
-
 .PP
 \fBtest\fP
   Pretend you are testing your code
-  See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.
-""")
+  See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.""")
