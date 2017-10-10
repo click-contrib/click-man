@@ -30,6 +30,23 @@ pip install click-man
 
 The following sections describe different usage example for *click-man*.
 
+### Use with a previously installed package
+
+**click-man** provides its own command line tool which can be passed the name of
+an installed script:
+
+```bash
+click-man commandname
+```
+
+where `commandname` is the name of an installed `console_script` entry point.
+
+To specify a target directory for the man pages, use the `--target` option:
+
+```bash
+click-man --target path/to/man/pages commandname
+```
+
 ### Use with setuptools
 
 **click-man** provides a sane setuptools command extension which can be used like the following:
