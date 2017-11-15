@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet*
 
+## [v0.2.3]
+### Added
+- Generate man pages for every console script with setuptools command
+
 ## [v0.2.2]
 - Release
 
@@ -36,7 +40,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Please also see `git log`
 
-[Unreleased]: https://github.com/click-contrib/click-man/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/click-contrib/click-man/compare/v0.2.3...HEAD
+[v0.2.3]: https://github.com/click-contrib/click-man/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/click-contrib/click-man/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/click-contrib/click-man/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/click-contrib/click-man/compare/v0.1.1...v0.2.0
