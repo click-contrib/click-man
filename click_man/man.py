@@ -103,4 +103,10 @@ class ManPage(object):
                 lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
                     self.command, name))
 
-        return '\n'.join(lines)
+        man_page = '\n'.join(lines)
+
+        if not man_page.endswith('\n'):
+            # Ensure man page ends with newline.
+            man_page += '\n'
+
+        return man_page
