@@ -35,7 +35,7 @@ def generate_man_page(ctx, version=None):
     man_page.options = [x.get_help_record(None) for x in ctx.command.params if isinstance(x, click.Option)]
     commands = getattr(ctx.command, 'commands', None)
     if commands:
-        man_page.commands = [(k, v.short_help) for k, v in commands.items()]
+        man_page.commands = [(k, v.short_help or v.help) for k, v in commands.items()]
 
     return str(man_page)
 
