@@ -78,4 +78,5 @@ Make me think I am batman
 .PP
 \fBtest\fP
   Pretend you are testing your code
-  See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.""")
+  See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.
+""")
