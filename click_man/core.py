@@ -29,13 +29,15 @@ def generate_man_page(ctx, version=None):
     # Create man page with the details from the given context
     man_page = ManPage(ctx.command_path)
     man_page.version = version
-    man_page.short_help = ctx.command.short_help
+    man_page.short_help = ctx.command.get_short_help_str()
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
     man_page.options = [x.get_help_record(None) for x in ctx.command.params if isinstance(x, click.Option)]
     commands = getattr(ctx.command, 'commands', None)
     if commands:
-        man_page.commands = [(k, v.short_help or v.help) for k, v in commands.items()]
+        man_page.commands = [
+            (k, v.get_short_help_str()) for k, v in commands.items()
+        ]
 
     return str(man_page)
 
