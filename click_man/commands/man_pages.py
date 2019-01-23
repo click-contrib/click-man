@@ -59,11 +59,9 @@ class man_pages(Command):
             raise DistutilsSetupError('No entry points defined in setup()')
 
         console_scripts = [(k, v) for k, v in eps['console_scripts'].items()]
-        # Only generate man pages for first console script
         # FIXME: create own setup() attribute for CLI script configuration
-        name, entry_point = console_scripts[0]
-
-        self.announce('Load entry point {0}'.format(name), level=2)
-        cli = entry_point.resolve()
-        self.announce('Generate man pages for {0}'.format(name), level=2)
-        write_man_pages(name, cli, version=self.version, target_dir=self.target)
+        for name, entry_point in console_scripts:
+            self.announce('Load entry point {0}'.format(name), level=2)
+            cli = entry_point.resolve()
+            self.announce('Generate man pages for {0}'.format(name), level=2)
+            write_man_pages(name, cli, version=self.version, target_dir=self.target)
