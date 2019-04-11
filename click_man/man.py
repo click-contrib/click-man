@@ -55,6 +55,8 @@ class ManPage(object):
     def replace_blank_lines(self, s):
         ''' Find any blank lines and replace them with .PP '''
 
+        if not s:
+            return ""
         lines = map(lambda l: self.PARAGRAPH_KEYWORD if l == '' else l,
                     s.split('\n'))
         return '\n'.join(lines)
