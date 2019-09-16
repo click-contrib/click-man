@@ -9,9 +9,11 @@ generate man pages from a click application.
 :license: MIT, see LICENSE for more details.
 """
 
+from datetime import datetime
 import os
-import click
 from pkg_resources import iter_entry_points, get_distribution
+
+import click
 
 from click_man.core import write_man_pages
 
@@ -22,9 +24,11 @@ from click_man.core import write_man_pages
     type=click.Path(file_okay=False, dir_okay=True, resolve_path=True),
     help='Target location for the man pages'
 )
+@click.option('--man-version', help='Version to use in generated man page(s)')
+@click.option('--man-date', help='Date to use in generated man page(s)')
 @click.version_option(get_distribution('click-man').version, '-V', '--version')
 @click.argument('name')
-def cli(target, name):
+def cli(target, name, man_version, man_date):
     """
     Generate man pages for the scripts defined in the ``console_scripts`` entry
     point.
@@ -49,6 +53,17 @@ def cli(target, name):
         os.makedirs(target)
     except OSError:
         pass
+
+    if not man_version:
+        man_version = entry_point.dist.version
+
+    if man_date:
+        try:
+            datetime.strptime(man_date, '%Y-%m-%d')
+        except ValueError:
+            raise click.ClickException(
+                '"{0}" is not a valid date.'.format(man_date)
+            )
 
     click.echo('Load entry point {0}'.format(name))
     cli = entry_point.resolve()
@@ -81,5 +96,5 @@ def cli(target, name):
 
     click.echo('Generate man pages for {0} in {1}'.format(name, target))
     write_man_pages(
-        name, cli, version=entry_point.dist.version, target_dir=target,
+        name, cli, version=man_version, target_dir=target, date=man_date,
     )

@@ -50,4 +50,37 @@ def test_is_click_command(mock_entry_points, mock_echo, mock_write):
     ])
     mock_write.assert_called_once_with(
         'foo', fake_command, version=fake_version, target_dir=fake_target,
+        date=None,
+    )
+
+
+@mock.patch('os.makedirs', new=mock.Mock())
+@mock.patch.object(shell, 'write_man_pages')
+@mock.patch.object(click, 'echo')
+@mock.patch.object(shell, 'iter_entry_points')
+def test_man_date_version(mock_entry_points, mock_echo, mock_write):
+    fake_target = os.path.join(os.getcwd(), 'man')
+    fake_command = click.Command(name='foo')
+    entry_point = mock.Mock()
+    entry_point.resolve.return_value = fake_command
+
+    mock_entry_points.return_value = iter([entry_point])
+
+    runner = CLIRunner()
+    result = runner.invoke(
+        shell.cli,
+        ['foo', '--man-version', '3.2.1', '--man-date', '2020-01-01'],
+    )
+
+    assert result.exit_code == 0, result.output
+
+    mock_entry_points.assert_called_once_with('console_scripts', name='foo')
+    entry_point.dist.version.assert_not_called()
+    mock_echo.assert_has_calls([
+        mock.call('Load entry point foo'),
+        mock.call('Generate man pages for foo in %s' % fake_target),
+    ])
+    mock_write.assert_called_once_with(
+        'foo', fake_command, version='3.2.1', target_dir=fake_target,
+        date='2020-01-01',
     )
