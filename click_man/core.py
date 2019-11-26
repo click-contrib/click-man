@@ -17,6 +17,14 @@ from .man import ManPage
 
 CLICK_VERSION = tuple(int(x) for x in click.__version__.split('.'))
 
+
+def get_short_help_str(command, limit=45):
+    """
+    Gets short help for the command or makes it by shortening the long help string.
+    """
+    return command.short_help or command.help and click.utils.make_default_short_help(command.help, limit) or ''
+
+
 def generate_man_page(ctx, version=None):
     """
     Generate documentation for the given command.
@@ -30,14 +38,14 @@ def generate_man_page(ctx, version=None):
     # Create man page with the details from the given context
     man_page = ManPage(ctx.command_path)
     man_page.version = version
-    man_page.short_help = ctx.command.get_short_help_str()
+    man_page.short_help = get_short_help_str(ctx.command)
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
     man_page.options = [x.get_help_record(None) for x in ctx.command.params if isinstance(x, click.Option)]
     commands = getattr(ctx.command, 'commands', None)
     if commands:
         man_page.commands = [
-            (k, v.get_short_help_str()) for k, v in commands.items()
+            (k, get_short_help_str(v)) for k, v in commands.items()
         ]
 
     return str(man_page)
