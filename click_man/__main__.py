@@ -24,7 +24,7 @@ from click_man.core import write_man_pages
 @click.argument('name')
 def cli(target, name):
     """
-    Generate man pages for the scripts defined in the ``console_acripts`` entry point.
+    Generate man pages for the scripts defined in the ``console_scripts`` entry point.
 
     The cli application is gathered from entry points of installed packages.
 
