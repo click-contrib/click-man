@@ -10,7 +10,8 @@ about a CLI application.
 :license: MIT, see LICENSE for more details.
 """
 
-from datetime import datetime
+import os
+import time
 
 
 class ManPage(object):
@@ -50,7 +51,14 @@ class ManPage(object):
         self.commands = []
 
         #: Holds the date of the man page creation time.
-        self.date = datetime.now().strftime("%d-%b-%Y")
+        self.date = time.strftime("%Y-%m-%d", time.gmtime(int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))))
+
+    def replace_blank_lines(self, s):
+        ''' Find any blank lines and replace them with .PP '''
+
+        lines = map(lambda l: self.PARAGRAPH_KEYWORD if l == '' else l,
+                    s.split('\n'))
+        return '\n'.join(lines)
 
     def __str__(self):
         """
@@ -65,7 +73,7 @@ class ManPage(object):
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(r'{0} \- {1}'.format(self.command, self.short_help))
+        lines.append(r'{0} \- {1}'.format(self.command.replace(' ', r'\-'), self.short_help))
 
         # write synopsis
         lines.append('{0} SYNOPSIS'.format(self.SECTION_HEADING_KEYWORD))
@@ -73,8 +81,9 @@ class ManPage(object):
         lines.append(self.synopsis.replace('-', r'\-'))
 
         # write the description
-        lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(self.description)  # FIXME: replace empty lines with PARAGRAPH_KEYWORD
+        if self.description:
+            lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
+            lines.append(self.replace_blank_lines(self.description))
 
         # write the options
         if self.options:
@@ -83,7 +92,7 @@ class ManPage(object):
                 lines.append(self.INDENT_KEYWORDD)
                 option_unpacked = option.replace('-', r'\-').split()
                 lines.append(r'\fB{0}\fP{1}'.format(option_unpacked[0], (' ' + ' '.join(option_unpacked[1:])) if len(option_unpacked) > 1 else ''))
-                lines.append(description)
+                lines.append(self.replace_blank_lines(description))
 
         # write commands
         if self.commands:
@@ -91,9 +100,14 @@ class ManPage(object):
             for name, description in self.commands:
                 lines.append(self.PARAGRAPH_KEYWORD)
                 lines.append(r'\fB{0}\fP'.format(name))
-                lines.append('  ' + description)
+                lines.append('  ' + self.replace_blank_lines(description))
                 lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
                     self.command, name))
-                lines.append('')
 
-        return '\n'.join(lines)
+        man_page = '\n'.join(lines)
+
+        if not man_page.endswith('\n'):
+            # Ensure man page ends with newline.
+            man_page += '\n'
+
+        return man_page
