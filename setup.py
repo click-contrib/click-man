@@ -17,7 +17,8 @@ setup(
     author='Timo Furrer',
     author_email='tuxtimo@gmail.com',
     install_requires=[
-        'click'
+        'click',
+        'setuptools',
     ],
     packages=find_packages(exclude=('tests', )),
     entry_points={
