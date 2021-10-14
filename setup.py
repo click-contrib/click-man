@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name='click-man',
-    version='0.4.1',
+    version='0.4.2',
     url='https://github.com/click-contrib/click-man',
     license='MIT',
     description='Generate man pages for click based CLI applications',
