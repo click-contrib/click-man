@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet*
 
+## [v0.4.0]
+- Discover command if not in entry_points
+
 ## [v0.3.0]
 - Make compatible with click >= 7.0
 
@@ -39,7 +42,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Please also see `git log`
 
-[Unreleased]: https://github.com/click-contrib/click-man/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/click-contrib/click-man/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/click-contrib/click-man/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/click-contrib/click-man/compare/v0.2.2...v0.3.0
 [v0.2.2]: https://github.com/click-contrib/click-man/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/click-contrib/click-man/compare/v0.2.0...v0.2.1

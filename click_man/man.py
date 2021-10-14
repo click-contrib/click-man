@@ -10,7 +10,8 @@ about a CLI application.
 :license: MIT, see LICENSE for more details.
 """
 
-from datetime import datetime
+import os
+import time
 
 
 class ManPage(object):
@@ -50,7 +51,7 @@ class ManPage(object):
         self.commands = []
 
         #: Holds the date of the man page creation time.
-        self.date = datetime.now().strftime("%d-%b-%Y")
+        self.date = time.strftime("%Y-%m-%d", time.gmtime(int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))))
 
     def replace_blank_lines(self, s):
         ''' Find any blank lines and replace them with .PP '''
