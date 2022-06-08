@@ -72,7 +72,7 @@ Man pages are **not**: they are a UNIX thing which means setuptools does not pro
 solution to generate and install man pages. 
 We should consider using automatic man page installation only with vendor specific packaging, e.g. for `*.deb` or `*.rpm` packages.
 
-#### (2) Man pages are not compatable with Python virtualenvs
+#### (2) Man pages are not compatible with Python virtualenvs
 
 Even on systems that support man pages, Python packages can be installed in
 virtualenvs via pip and setuptools, which do not make commands available

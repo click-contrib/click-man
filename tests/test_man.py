@@ -62,7 +62,7 @@ Boaa, richtig geili sach.
 .SH OPTIONS
 .TP
 \fB\-\-yolo\fP
-Do it in yolo sytle
+Do it in yolo style
 .TP
 \fB\-\-iambatman\fP
 Make me think I am batman
