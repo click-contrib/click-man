@@ -38,7 +38,7 @@ multi line description of a click-man test.
 Boaa, richtig geili sach."""
 
     man.options = [
-        ('--yolo', 'Do it in yolo sytle'),
+        ('--yolo', 'Do it in yolo style'),
         ('--iambatman', 'Make me think I am batman')
     ]
     man.commands = [
