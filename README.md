@@ -113,7 +113,7 @@ override_dh_installman:
 	dh_installman -O--buildsystem=pybuild
 ```
 
-Now we are able to build are debian package with the tool of your choice, e.g.:
+Now we are able to build a debian package with the tool of our choice, e.g.:
 
 ```debuild -us -uc```
 
