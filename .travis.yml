@@ -1,18 +1,15 @@
 language: python
 python:
-    - '2.7'
-    - pypy
-    - '3.5'
-    - '3.6'
-    - '3.7'
-    - '3.8'
-
+  - '2.7'
+  - '3.5'
+  - '3.6'
+  - '3.7'
+  - '3.8'
+  - pypy
 install:
-    - python setup.py build sdist
-    - pip install -r requirements-dev.txt
-
-script: nosetests --verbosity 2
-
+  - pip install tox-travis
+script:
+  - tox
 deploy:
   provider: pypi
   user: tuxtimo
