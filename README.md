@@ -1,6 +1,6 @@
 # click-man
 
-[![Build Status](https://travis-ci.org/click-contrib/click-man.svg?branch=master)](https://travis-ci.org/click-contrib/click-man) [![PyPI Package version](https://badge.fury.io/py/click-man.svg)](https://pypi.python.org/pypi/click-man)
+[![Build Status](https://github.com/click-contrib/click-man/actions/workflows/ci.yaml/badge.svg)](https://github.com/click-contrib/click-man/actions/workflows/ci.yaml) [![PyPI Package version](https://badge.fury.io/py/click-man.svg)](https://pypi.python.org/pypi/click-man)
 
 Create **man pages** for [click](https://github.com/pallets/click) application as easy as this:
 
@@ -8,7 +8,7 @@ Create **man pages** for [click](https://github.com/pallets/click) application a
 python3 setup.py --command-packages=click_man.commands man_pages
 ```
 
-→ Checkout the [debian packaging example](https://github.com/timofurrer/click-man#debian-packages)
+→ Checkout the [debian packaging example](#debian-packages)
 
 ## What it does
 
@@ -117,4 +117,4 @@ Now we are able to build a debian package with the tool of our choice, e.g.:
 
 ```debuild -us -uc```
 
-Checkout a working example here: [repo debian package](https://github.com/timofurrer/click-man/tree/master/examples/debian_pkg)
+Checkout a working example here: [repo debian package](https://github.com/click-contrib/click-man/tree/master/examples/debian_pkg)
