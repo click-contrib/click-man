@@ -2,9 +2,6 @@
 Module to test man page functionality of click-man package.
 """
 
-
-from sure import expect
-
 from click_man.man import ManPage
 
 
@@ -15,12 +12,12 @@ def test_simple_man_page():
     man = ManPage('my-command')
     man.short_help = 'Command to test man pages for click.'
     man.date = '21-Feb-1994'
-    expect(str(man)).to.be.equal(""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
+    assert str(man) == r""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
 .SH NAME
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
 .B my-command
-""")
+"""
 
 
 def test_full_man_page():
@@ -47,7 +44,7 @@ Boaa, richtig geili sach."""
         ('test', 'Pretend you are testing your code')
     ]
 
-    expect(str(man)).to.be.equal(r""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
+    assert str(man) == r""".TH "MY-COMMAND" "1" "21-Feb-1994" "1.0.0" "my-command Manual"
 .SH NAME
 my-command \- Command to test man pages for click.
 .SH SYNOPSIS
@@ -79,4 +76,4 @@ Make me think I am batman
 \fBtest\fP
   Pretend you are testing your code
   See \fBmy-command-test(1)\fP for full documentation on the \fBtest\fP command.
-""")
+"""  # noqa: E501
