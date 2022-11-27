@@ -1,5 +1,3 @@
 -r requirements.txt
-sure
-nose
-rednose
-coverage
+pytest
+pytest-cov
