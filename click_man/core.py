@@ -10,6 +10,7 @@ generate man pages for entire click applications.
 """
 
 import os
+from inspect import cleandoc
 
 import click
 
@@ -46,7 +47,7 @@ def generate_man_page(ctx, version=None, date=None):
     man_page = ManPage(ctx.command_path)
     man_page.version = version
     man_page.short_help = get_short_help_str(ctx.command)
-    man_page.description = ctx.command.help
+    man_page.description = cleandoc(ctx.command.help)
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
     man_page.options = [
         x.get_help_record(ctx)
