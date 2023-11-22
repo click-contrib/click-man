@@ -42,7 +42,7 @@ def generate_man_page(ctx, version=None):
     man_page.short_help = get_short_help_str(ctx.command)
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
-    man_page.options = [x.get_help_record(ctx) for x in ctx.command.params if isinstance(x, click.Option)]
+    man_page.options = [x.get_help_record(ctx) for x in ctx.command.params if isinstance(x, click.Option) and not getattr(x, 'hidden', False)]
     commands = getattr(ctx.command, 'commands', None)
     if commands:
         man_page.commands = [
