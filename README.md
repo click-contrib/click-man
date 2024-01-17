@@ -5,14 +5,16 @@
 Create **man pages** for [click](https://github.com/pallets/click) application as easy as this:
 
 ```bash
-python3 setup.py --command-packages=click_man.commands man_pages
+click-man foo
 ```
+
+where `foo` is the name of your script, as defined in [`console_scripts`](https://python-packaging.readthedocs.io/en/latest/command-line-scripts.html#the-console-scripts-entry-point).
 
 → Checkout the [debian packaging example](#debian-packages)
 
 ## What it does
 
-*click-man* will generate one man page per command of your click CLI application specified in `console_scripts` in your `setup.py`.
+*click-man* will generate one man page per command of your click CLI application specified in `console_scripts` in your `setup.py` / `setup.cfg` / `pyproject.toml`.
 
 ## Installation
 
@@ -47,20 +49,6 @@ To specify a target directory for the man pages, use the `--target` option:
 click-man --target path/to/man/pages commandname
 ```
 
-### Use with setuptools
-
-**click-man** provides a sane setuptools command extension which can be used like the following:
-
-```bash
-python3 setup.py --command-packages=click_man.commands man_pages
-```
-
-or specify the man pages target directory:
-
-```bash
-python3 setup.py --command-packages=click_man.commands man_pages --target path/to/man/pages
-```
-
 ### Automatic man page installation with setuptools and pip
 
 This approach of installing man pages is problematic for various reasons:
@@ -68,8 +56,7 @@ This approach of installing man pages is problematic for various reasons:
 #### (1) Man pages are a UNIX thing
 
 Python in general and with that pip and setuptools are aimed to be platform independent.
-Man pages are **not**: they are a UNIX thing which means setuptools does not provide a sane
-solution to generate and install man pages. 
+Man pages are **not**: they are a UNIX thing which means setuptools does not provide a sane solution to generate and install man pages.
 We should consider using automatic man page installation only with vendor specific packaging, e.g. for `*.deb` or `*.rpm` packages.
 
 #### (2) Man pages are not compatible with Python virtualenvs
@@ -88,8 +75,7 @@ the version and behavior available in any given virtualenv.
 #### (3) We want to generate man pages on the fly
 
 First, we do not want to commit man pages to our source control.
-We want to generate them on the fly. Either
-during build or installation time.
+We want to generate them on the fly, either during build or installation time.
 
 With setuptools and pip we face two problems:
 
@@ -109,7 +95,7 @@ We override the rule provided by `dh_installman` to generate our man pages in ad
 
 ```Makefile
 override_dh_installman:
-	python3 setup.py --command-packages=click_man.commands man_pages --target debian/tmp/manpages
+	click-man <executable> --target debian/tmp/manpages
 	dh_installman -O--buildsystem=pybuild
 ```
 
