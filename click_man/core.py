@@ -10,13 +10,12 @@ generate man pages for entire click applications.
 """
 
 import os
-from distutils.version import LooseVersion
 
 import click
 
 from .man import ManPage
 
-CLICK_VERSION = tuple(int(x) for x in click.__version__.split('.'))
+CLICK_VERSION = tuple(int(x) for x in click.__version__.split('.')[:2])
 
 
 def get_short_help_str(command, limit=45):
@@ -84,7 +83,7 @@ def write_man_pages(
 
     commands = getattr(cli, 'commands', {})
     for name, command in commands.items():
-        if LooseVersion(click.__version__) >= LooseVersion("7.0"):
+        if CLICK_VERSION >= (7, 0):
             # Since Click 7.0, we have been able to mark commands as hidden
             if command.hidden:
                 # Do not write a man page for a hidden command

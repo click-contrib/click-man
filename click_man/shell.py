@@ -10,12 +10,33 @@ generate man pages from a click application.
 """
 
 from datetime import datetime
+import importlib.metadata
 import os
-from pkg_resources import iter_entry_points, get_distribution
+import sys
+from typing import Optional
 
 import click
 
 from click_man.core import write_man_pages
+
+
+def _get_entry_point(name: str) -> Optional[importlib.metadata.EntryPoint]:
+    entry_points = importlib.metadata.entry_points()
+    if sys.version_info >= (3, 10):
+        console_scripts = entry_points.select(
+            group='console_scripts', name=name
+        )
+    else:
+        console_scripts = [
+            ep for ep in entry_points.get('console_scripts', [])
+            if ep.name == name
+        ]
+
+    if len(console_scripts) < 1:
+        return None
+
+    # Only generate man pages for first console script
+    return tuple(console_scripts)[0]
 
 
 @click.command(context_settings={'help_option_names': ['-h', '--help']})
@@ -26,7 +47,9 @@ from click_man.core import write_man_pages
 )
 @click.option('--man-version', help='Version to use in generated man page(s)')
 @click.option('--man-date', help='Date to use in generated man page(s)')
-@click.version_option(get_distribution('click-man').version, '-V', '--version')
+@click.version_option(
+    importlib.metadata.version('click-man'), '-V', '--version'
+)
 @click.argument('name')
 def cli(target, name, man_version, man_date):
     """
@@ -38,15 +61,11 @@ def cli(target, name, man_version, man_date):
     The generated man pages are written to files in the directory given
     by ``--target``.
     """
-    console_scripts = [
-        ep for ep in iter_entry_points('console_scripts', name=name)
-    ]
-    if len(console_scripts) < 1:
+    entry_point = _get_entry_point(name)
+    if not entry_point:
         raise click.ClickException(
             '"{0}" is not an installed console script.'.format(name)
         )
-    # Only generate man pages for first console script
-    entry_point = console_scripts[0]
 
     # create target directory if it does not exist yet
     try:
@@ -55,7 +74,7 @@ def cli(target, name, man_version, man_date):
         pass
 
     if not man_version:
-        man_version = entry_point.dist.version
+        man_version = entry_point.version
 
     if man_date:
         try:
@@ -66,7 +85,7 @@ def cli(target, name, man_version, man_date):
             )
 
     click.echo('Load entry point {0}'.format(name))
-    cli = entry_point.resolve()
+    cli = entry_point.load()
 
     # If the entry point isn't a click.Command object, try to find it in the
     # module
@@ -74,12 +93,12 @@ def cli(target, name, man_version, man_date):
         from importlib import import_module
         from inspect import getmembers
 
-        if not entry_point.module_name:
+        if not entry_point.module:
             raise click.ClickException(
                 'Could not find module name for "{0}".'.format(name)
             )
 
-        ep_module = import_module(entry_point.module_name)
+        ep_module = import_module(entry_point.module)
         ep_members = getmembers(
             ep_module, lambda x: isinstance(x, click.Command),
         )
