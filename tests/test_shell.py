@@ -45,12 +45,17 @@ def test_cli__valid(mock_entry_point, mock_echo, mock_write):
     assert result.exit_code == 0, result.output
 
     mock_entry_point.assert_called_once_with('foo')
-    mock_echo.assert_has_calls([
-        mock.call('Load entry point foo'),
-        mock.call('Generate man pages for foo in %s' % fake_target),
-    ])
+    mock_echo.assert_has_calls(
+        [
+            mock.call('Load entry point foo'),
+            mock.call('Generate man pages for foo in %s' % fake_target),
+        ]
+    )
     mock_write.assert_called_once_with(
-        'foo', fake_command, version=fake_version, target_dir=fake_target,
+        'foo',
+        fake_command,
+        version=fake_version,
+        target_dir=fake_target,
         date=None,
     )
 
@@ -76,11 +81,16 @@ def test_cli__with_man_date_version(mock_entry_point, mock_echo, mock_write):
     assert result.exit_code == 0, result.output
 
     mock_entry_point.assert_called_once_with('foo')
-    mock_echo.assert_has_calls([
-        mock.call('Load entry point foo'),
-        mock.call('Generate man pages for foo in %s' % fake_target),
-    ])
+    mock_echo.assert_has_calls(
+        [
+            mock.call('Load entry point foo'),
+            mock.call('Generate man pages for foo in %s' % fake_target),
+        ]
+    )
     mock_write.assert_called_once_with(
-        'foo', fake_command, version='3.2.1', target_dir=fake_target,
+        'foo',
+        fake_command,
+        version='3.2.1',
+        target_dir=fake_target,
         date='2020-01-01',
     )

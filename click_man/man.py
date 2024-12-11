@@ -20,6 +20,7 @@ class ManPage(object):
 
     :param str command: the name of the command
     """
+
     TITLE_KEYWORD = '.TH'
     SECTION_HEADING_KEYWORD = '.SH'
     PARAGRAPH_KEYWORD = '.PP'
@@ -51,13 +52,17 @@ class ManPage(object):
         self.commands = []
 
         #: Holds the date of the man page creation time.
-        self.date = time.strftime("%Y-%m-%d", time.gmtime(int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))))
+        self.date = time.strftime(
+            '%Y-%m-%d',
+            time.gmtime(int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))),
+        )
 
     def replace_blank_lines(self, s):
-        ''' Find any blank lines and replace them with .PP '''
+        """Find any blank lines and replace them with .PP"""
 
-        lines = map(lambda l: self.PARAGRAPH_KEYWORD if l == '' else l,
-                    s.split('\n'))
+        lines = map(
+            lambda x: self.PARAGRAPH_KEYWORD if x == '' else x, s.split('\n')
+        )
         return '\n'.join(lines)
 
     def __str__(self):
@@ -68,12 +73,23 @@ class ManPage(object):
         lines = []
 
         # write title and footer
-        lines.append('{0} "{1}" "1" "{2}" "{3}" "{4} Manual"'.format(
-            self.TITLE_KEYWORD, self.command.upper(), self.date, self.version, self.command))
+        lines.append(
+            '{0} "{1}" "1" "{2}" "{3}" "{4} Manual"'.format(
+                self.TITLE_KEYWORD,
+                self.command.upper(),
+                self.date,
+                self.version,
+                self.command,
+            )
+        )
 
         # write name section
         lines.append('{0} NAME'.format(self.SECTION_HEADING_KEYWORD))
-        lines.append(r'{0} \- {1}'.format(self.command.replace(' ', r'\-'), self.short_help))
+        lines.append(
+            r'{0} \- {1}'.format(
+                self.command.replace(' ', r'\-'), self.short_help
+            )
+        )
 
         # write synopsis
         lines.append('{0} SYNOPSIS'.format(self.SECTION_HEADING_KEYWORD))
@@ -82,7 +98,9 @@ class ManPage(object):
 
         # write the description
         if self.description:
-            lines.append('{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD))
+            lines.append(
+                '{0} DESCRIPTION'.format(self.SECTION_HEADING_KEYWORD)
+            )
             lines.append(self.replace_blank_lines(self.description))
 
         # write the options
@@ -91,7 +109,14 @@ class ManPage(object):
             for option, description in self.options:
                 lines.append(self.INDENT_KEYWORDD)
                 option_unpacked = option.replace('-', r'\-').split()
-                lines.append(r'\fB{0}\fP{1}'.format(option_unpacked[0], (' ' + ' '.join(option_unpacked[1:])) if len(option_unpacked) > 1 else ''))
+                lines.append(
+                    r'\fB{0}\fP{1}'.format(
+                        option_unpacked[0],
+                        (' ' + ' '.join(option_unpacked[1:]))
+                        if len(option_unpacked) > 1
+                        else '',
+                    )
+                )
                 lines.append(self.replace_blank_lines(description))
 
         # write commands
@@ -101,8 +126,11 @@ class ManPage(object):
                 lines.append(self.PARAGRAPH_KEYWORD)
                 lines.append(r'\fB{0}\fP'.format(name))
                 lines.append('  ' + self.replace_blank_lines(description))
-                lines.append(r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
-                    self.command, name))
+                lines.append(
+                    r'  See \fB{0}-{1}(1)\fP for full documentation on the \fB{1}\fP command.'.format(
+                        self.command, name
+                    )
+                )
 
         man_page = '\n'.join(lines)
 
