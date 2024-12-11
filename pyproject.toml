@@ -1,3 +1,48 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "click-man"
+authors = [
+    {name = "Timo Furrer", email = "tuxtimo@gmail.com"},
+]
+maintainers = [
+    {name = "Timo Furrer", email = "tuxtimo@gmail.com"},
+    {name = "Stephen Finucane", email = "stephen@that.guru"},
+]
+description = "Generate man pages for click based CLI applications"
+readme = {file = "README.md", content-type="text/markdown"}
+requires-python = ">=3.9"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Documentation",
+]
+dependencies = [
+    "click",
+]
+version = "0.5.0"
+
+[project.scripts]
+click-man = "click_man.__main__:cli"
+
+[project.urls]
+Source = "https://github.com/click-contrib/click-man"
+
+# [tool.setuptools]
+# include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["click_man*"]
+exclude = ["tests*"]
+namespaces = false
+
 [tool.ruff]
 line-length = 79
 
