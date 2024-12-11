@@ -22,7 +22,12 @@ def get_short_help_str(command, limit=45):
     """
     Gets short help for the command or makes it by shortening the long help string.
     """
-    return command.short_help or command.help and click.utils.make_default_short_help(command.help, limit) or ''
+    return (
+        command.short_help
+        or command.help
+        and click.utils.make_default_short_help(command.help, limit)
+        or ''
+    )
 
 
 def generate_man_page(ctx, version=None, date=None):
@@ -43,7 +48,11 @@ def generate_man_page(ctx, version=None, date=None):
     man_page.short_help = get_short_help_str(ctx.command)
     man_page.description = ctx.command.help
     man_page.synopsis = ' '.join(ctx.command.collect_usage_pieces(ctx))
-    man_page.options = [x.get_help_record(ctx) for x in ctx.command.params if isinstance(x, click.Option) and not getattr(x, 'hidden', False)]
+    man_page.options = [
+        x.get_help_record(ctx)
+        for x in ctx.command.params
+        if isinstance(x, click.Option) and not getattr(x, 'hidden', False)
+    ]
 
     if date:
         man_page.date = date
@@ -58,7 +67,12 @@ def generate_man_page(ctx, version=None, date=None):
 
 
 def write_man_pages(
-    name, cli, parent_ctx=None, version=None, target_dir=None, date=None,
+    name,
+    cli,
+    parent_ctx=None,
+    version=None,
+    target_dir=None,
+    date=None,
 ):
     """
     Generate man page files recursively
@@ -90,6 +104,10 @@ def write_man_pages(
                 continue
 
         write_man_pages(
-            name, command, parent_ctx=ctx, version=version,
-            target_dir=target_dir, date=date,
+            name,
+            command,
+            parent_ctx=ctx,
+            version=version,
+            target_dir=target_dir,
+            date=date,
         )

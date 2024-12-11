@@ -6,7 +6,6 @@ import click
 
 
 class Repo(object):
-
     def __init__(self, home):
         self.home = home
         self.config = {}
@@ -25,12 +24,21 @@ pass_repo = click.make_pass_decorator(Repo)
 
 
 @click.group()
-@click.option('--repo-home', envvar='REPO_HOME', default='.repo',
-              metavar='PATH', help='Changes the repository folder location.')
-@click.option('--config', nargs=2, multiple=True,
-              metavar='KEY VALUE', help='Overrides a config key/value pair.')
-@click.option('--verbose', '-v', is_flag=True,
-              help='Enables verbose mode.')
+@click.option(
+    '--repo-home',
+    envvar='REPO_HOME',
+    default='.repo',
+    metavar='PATH',
+    help='Changes the repository folder location.',
+)
+@click.option(
+    '--config',
+    nargs=2,
+    multiple=True,
+    metavar='KEY VALUE',
+    help='Overrides a config key/value pair.',
+)
+@click.option('--verbose', '-v', is_flag=True, help='Enables verbose mode.')
 @click.version_option('1.0')
 @click.pass_context
 def cli(ctx, repo_home, config, verbose):
@@ -52,10 +60,17 @@ def cli(ctx, repo_home, config, verbose):
 @cli.command()
 @click.argument('src')
 @click.argument('dest', required=False)
-@click.option('--shallow/--deep', default=False,
-              help='Makes a checkout shallow or deep.  Deep by default.')
-@click.option('--rev', '-r', default='HEAD',
-              help='Clone a specific revision instead of HEAD.')
+@click.option(
+    '--shallow/--deep',
+    default=False,
+    help='Makes a checkout shallow or deep.  Deep by default.',
+)
+@click.option(
+    '--rev',
+    '-r',
+    default='HEAD',
+    help='Clone a specific revision instead of HEAD.',
+)
 @pass_repo
 def clone(repo, src, dest, shallow, rev):
     """Clones a repository.
@@ -86,10 +101,10 @@ def delete(repo):
 
 
 @cli.command()
-@click.option('--username', prompt=True,
-              help='The developer\'s shown username.')
-@click.option('--email', prompt='E-Mail',
-              help='The developer\'s email address')
+@click.option(
+    '--username', prompt=True, help="The developer's shown username."
+)
+@click.option('--email', prompt='E-Mail', help="The developer's email address")
 @click.password_option(help='The login password.')
 @pass_repo
 def setuser(repo, username, email, password):
@@ -104,9 +119,13 @@ def setuser(repo, username, email, password):
 
 
 @cli.command()
-@click.option('--message', '-m', multiple=True,
-              help='The commit message.  If provided multiple times each '
-              'argument gets converted into a new line.')
+@click.option(
+    '--message',
+    '-m',
+    multiple=True,
+    help='The commit message.  If provided multiple times each '
+    'argument gets converted into a new line.',
+)
 @click.argument('files', nargs=-1, type=click.Path())
 @pass_repo
 def commit(repo, files, message):
@@ -138,8 +157,9 @@ def commit(repo, files, message):
 
 
 @cli.command(short_help='Copies files.')
-@click.option('--force', is_flag=True,
-              help='forcibly copy over an existing managed file')
+@click.option(
+    '--force', is_flag=True, help='forcibly copy over an existing managed file'
+)
 @click.argument('src', nargs=-1, type=click.Path())
 @click.argument('dst', type=click.Path())
 @pass_repo

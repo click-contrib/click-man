@@ -28,7 +28,8 @@ def _get_entry_point(name: str) -> Optional[importlib.metadata.EntryPoint]:
         )
     else:
         console_scripts = [
-            ep for ep in entry_points.get('console_scripts', [])
+            ep
+            for ep in entry_points.get('console_scripts', [])
             if ep.name == name
         ]
 
@@ -41,9 +42,11 @@ def _get_entry_point(name: str) -> Optional[importlib.metadata.EntryPoint]:
 
 @click.command(context_settings={'help_option_names': ['-h', '--help']})
 @click.option(
-    '--target', '-t', default=os.path.join(os.getcwd(), 'man'),
+    '--target',
+    '-t',
+    default=os.path.join(os.getcwd(), 'man'),
     type=click.Path(file_okay=False, dir_okay=True, resolve_path=True),
-    help='Target location for the man pages'
+    help='Target location for the man pages',
 )
 @click.option('--man-version', help='Version to use in generated man page(s)')
 @click.option('--man-date', help='Date to use in generated man page(s)')
@@ -100,7 +103,8 @@ def cli(target, name, man_version, man_date):
 
         ep_module = import_module(entry_point.module)
         ep_members = getmembers(
-            ep_module, lambda x: isinstance(x, click.Command),
+            ep_module,
+            lambda x: isinstance(x, click.Command),
         )
 
         if len(ep_members) < 1:
@@ -115,5 +119,9 @@ def cli(target, name, man_version, man_date):
 
     click.echo('Generate man pages for {0} in {1}'.format(name, target))
     write_man_pages(
-        name, cli, version=man_version, target_dir=target, date=man_date,
+        name,
+        cli,
+        version=man_version,
+        target_dir=target,
+        date=man_date,
     )

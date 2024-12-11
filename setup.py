@@ -19,7 +19,7 @@ setup(
     install_requires=[
         'click',
     ],
-    packages=find_packages(exclude=('tests', )),
+    packages=find_packages(exclude=('tests',)),
     entry_points={
         'console_scripts': [
             'click-man = click_man.__main__:cli',
