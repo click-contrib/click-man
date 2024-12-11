@@ -22,14 +22,13 @@ where `foo` is the name of your script, as defined in [`console_scripts`](https:
 pip install click-man
 ```
 
-## Usage Recipes
+## Usage
 
 The following sections describe different usage example for *click-man*.
 
-### Use with a previously installed package
+### CLI
 
-**click-man** provides its own command line tool which can be passed the name of
-an installed script:
+**click-man** provides its own command line tool which can be passed the name of an installed script:
 
 ```bash
 click-man commandname
@@ -43,38 +42,13 @@ To specify a target directory for the man pages, use the `--target` option:
 click-man --target path/to/man/pages commandname
 ```
 
+You can use the `manpath` command or `MANPATH` environment variable to identify where man pages can be placed.
+
 ### Automatic man page installation with setuptools and pip
 
-This approach of installing man pages is problematic for various reasons:
-
-#### (1) Man pages are a UNIX thing
-
-Python in general and with that pip and setuptools are aimed to be platform independent.
-Man pages are **not**: they are a UNIX thing which means setuptools does not provide a sane solution to generate and install man pages.
-We should consider using automatic man page installation only with vendor specific packaging, e.g. for `*.deb` or `*.rpm` packages.
-
-#### (2) Man pages are not compatible with Python virtualenvs
-
-Even on systems that support man pages, Python packages can be installed in
-virtualenvs via pip and setuptools, which do not make commands available
-globally. In fact, one of the "features" of a virtualenv is the ability to
-install a package without affecting the main system. As it is imposable to
-ensure a man page is only generated when not installing into a virtualenv,
-auto-generated man pages would pollute the main system and not stay contained in
-the virtualenv. Additionally, as a user could install multiple different
-versions of the same package into multiple different virtualenvs on the same
-system, there is no guarantee that a globally installed man page will document
-the version and behavior available in any given virtualenv.
-
-#### (3) We want to generate man pages on the fly
-
-First, we do not want to commit man pages to our source control.
-We want to generate them on the fly, either during build or installation time.
-
-With setuptools and pip we face two problems:
-
-1. If we generate and install them during installation of the package pip does not know about the man pages and thus cannot uninstall it.
-2. If we generate them in our build process and add them to your distribution we do not have a way to prevent installation to */usr/share/man* for non-UNIX-like Operating Systems or from within virtualenvs.
+While earlier version of click-man provided a distutils hook that could be used to automatically install man pages,
+this approach had a number of caveats as outlined [below][issues-with-automatic-man-page-installation].
+distutils was removed from Python stdlib in Python 3.12 and the distutils hook was removed from **click-man** in v0.5.0.
 
 ### Debian packages
 
@@ -93,8 +67,50 @@ override_dh_installman:
 	dh_installman -O--buildsystem=pybuild
 ```
 
-Now we are able to build a debian package with the tool of our choice, e.g.:
+Now we are able to build a Debian package with the tool of our choice, e.g.:
 
-```debuild -us -uc```
+```bash
+debuild -us -uc
+```
 
 Checkout a working example here: [repo debian package](https://github.com/click-contrib/click-man/tree/master/examples/debian_pkg)
+
+### Other distro packages
+
+To include man pages in packages for other package managers like `dnf`, `zypper`, or `pacman`, you will likely need to do one of the following:
+
+* For upstream maintainers: generate man pages as part of a build release process and include them in version control or your generated sdists
+* For packagers: generate man pages as part of the package build process and include these in the RPMs or tarballs, along with the relevant stanzas in the package definition
+
+If you are packaging utilities, we would welcome PRs documenting best practices for those using **click-man** to document their utilities.
+
+## Issues with automatic man page installation
+
+### Man pages are a UNIX thing
+
+Python in general and with that pip and setuptools are aimed to be platform independent.
+Man pages are **not**: they are a UNIX thing which means setuptools does not provide a sane solution to generate and install man pages.
+We should consider using automatic man page installation only with vendor specific packaging, e.g. for `*.deb` or `*.rpm` packages.
+
+### Man pages are not compatible with Python virtualenvs
+
+Even on systems that support man pages, Python packages can be installed in
+virtualenvs via pip and setuptools, which do not make commands available
+globally. In fact, one of the "features" of a virtualenv is the ability to
+install a package without affecting the main system. As it is imposable to
+ensure a man page is only generated when not installing into a virtualenv,
+auto-generated man pages would pollute the main system and not stay contained in
+the virtualenv. Additionally, as a user could install multiple different
+versions of the same package into multiple different virtualenvs on the same
+system, there is no guarantee that a globally installed man page will document
+the version and behavior available in any given virtualenv.
+
+### We want to generate man pages on the fly
+
+First, we do not want to commit man pages to our source control.
+We want to generate them on the fly, either during build or installation time.
+
+With setuptools and pip we face two problems:
+
+1. If we generate and install them during installation of the package pip does not know about the man pages and thus cannot uninstall it.
+2. If we generate them in our build process and add them to your distribution we do not have a way to prevent installation to */usr/share/man* for non-UNIX-like Operating Systems or from within virtualenvs.
