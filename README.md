@@ -19,12 +19,6 @@ where `foo` is the name of your script, as defined in [`console_scripts`](https:
 ## Installation
 
 ```bash
-pip3 install click-man
-```
-
-**click-man** is also available for Python 2:
-
-```bash
 pip install click-man
 ```
 
