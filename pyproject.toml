@@ -30,7 +30,7 @@ dependencies = [
 version = "0.5.0"
 
 [project.scripts]
-click-man = "click_man.__main__:cli"
+click-man = "click_man.shell:cli"
 
 [project.urls]
 Source = "https://github.com/click-contrib/click-man"
