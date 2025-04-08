@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
     "click",
 ]
-version = "0.5.0"
+version = "0.5.1"
 
 [project.scripts]
 click-man = "click_man.shell:cli"
