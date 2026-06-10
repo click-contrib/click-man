@@ -88,7 +88,7 @@ def write_man_pages(
     """
     ctx = click.Context(cli, info_name=name, parent=parent_ctx)
 
-    man_page = generate_man_page(ctx, version)
+    man_page = generate_man_page(ctx, version=version, date=date)
     path = '{0}.1'.format(ctx.command_path.replace(' ', '-'))
     if target_dir:
         path = os.path.join(target_dir, path)

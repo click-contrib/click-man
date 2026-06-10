@@ -3,8 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
-*Nothing here yet*
+- Fix date getting ignored
 
 ## [v0.4.0]
 - Discover command if not in entry_points
