@@ -29,6 +29,12 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[dependency-groups]
+tests = [
+    "pytest",
+    "pytest-cov",
+]
+
 [project.scripts]
 click-man = "click_man.shell:cli"
 
