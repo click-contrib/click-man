@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -27,7 +27,7 @@ classifiers = [
 dependencies = [
     "click",
 ]
-version = "0.5.1"
+dynamic = ["version"]
 
 [project.scripts]
 click-man = "click_man.shell:cli"
@@ -39,6 +39,8 @@ Source = "https://github.com/click-contrib/click-man"
 include = ["click_man*"]
 exclude = ["tests*"]
 namespaces = false
+
+[tool.setuptools_scm]
 
 [tool.ruff]
 line-length = 79

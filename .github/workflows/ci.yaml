@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v7
+        # We need history to build the package
+        with:
+          fetch-depth: 0
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v7
         with:
