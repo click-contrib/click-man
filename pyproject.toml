@@ -25,7 +25,7 @@ classifiers = [
     "Topic :: Documentation",
 ]
 dependencies = [
-    "click",
+    "click>=8.0.0",
 ]
 dynamic = ["version"]
 
