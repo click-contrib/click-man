@@ -35,9 +35,6 @@ click-man = "click_man.shell:cli"
 [project.urls]
 Source = "https://github.com/click-contrib/click-man"
 
-# [tool.setuptools]
-# include-package-data = false
-
 [tool.setuptools.packages.find]
 include = ["click_man*"]
 exclude = ["tests*"]
