@@ -40,6 +40,24 @@ def _get_entry_point(name: str) -> Optional[importlib.metadata.EntryPoint]:
     return tuple(console_scripts)[0]
 
 
+def _get_version(
+    entry_point: importlib.metadata.EntryPoint, name: str
+) -> Optional[str]:
+    dist = getattr(entry_point, 'dist', None)
+    if dist and getattr(dist, 'version', None):
+        return dist.version
+
+    # Python < 3.10 fallback where EntryPoint has no dist attribute
+    for dist in importlib.metadata.distributions():
+        if any(
+            ep.group == 'console_scripts' and ep.name == name
+            for ep in dist.entry_points
+        ):
+            return dist.version
+
+    return None
+
+
 @click.command(context_settings={'help_option_names': ['-h', '--help']})
 @click.option(
     '--target',
@@ -77,7 +95,7 @@ def cli(target, name, man_version, man_date):
         pass
 
     if not man_version:
-        man_version = entry_point.version
+        man_version = _get_version(entry_point, name)
 
     if man_date:
         try:

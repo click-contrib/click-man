@@ -35,9 +35,54 @@ def test_cli__valid(mock_entry_point, mock_echo, mock_write):
     fake_version = '1.2.3'
     entry_point = mock.Mock(spec=importlib.metadata.EntryPoint)
     entry_point.load.return_value = fake_command
-    entry_point.version = fake_version
+    entry_point.dist = mock.Mock(version=fake_version)
 
     mock_entry_point.return_value = entry_point
+
+    runner = CLIRunner()
+    result = runner.invoke(shell.cli, ['foo'])
+
+    assert result.exit_code == 0, result.output
+
+    mock_entry_point.assert_called_once_with('foo')
+    mock_echo.assert_has_calls(
+        [
+            mock.call('Load entry point foo'),
+            mock.call('Generate man pages for foo in %s' % fake_target),
+        ]
+    )
+    mock_write.assert_called_once_with(
+        'foo',
+        fake_command,
+        version=fake_version,
+        target_dir=fake_target,
+        date=None,
+    )
+
+
+@mock.patch('os.makedirs', new=mock.Mock())
+@mock.patch.object(shell, 'write_man_pages')
+@mock.patch.object(click, 'echo')
+@mock.patch.object(shell, '_get_entry_point')
+@mock.patch('importlib.metadata.distributions')
+def test_cli__valid_no_dist(
+    mock_distributions, mock_entry_point, mock_echo, mock_write
+):
+    fake_target = os.path.join(os.getcwd(), 'man')
+    fake_command = click.Command(name='foo')
+    fake_version = '1.2.3'
+    entry_point = mock.Mock(spec=importlib.metadata.EntryPoint)
+    entry_point.load.return_value = fake_command
+    entry_point.dist = None
+
+    mock_entry_point.return_value = entry_point
+
+    fake_ep = mock.Mock(group='console_scripts')
+    fake_ep.name = 'foo'
+    fake_dist = mock.Mock()
+    fake_dist.version = fake_version
+    fake_dist.entry_points = [fake_ep]
+    mock_distributions.return_value = [fake_dist]
 
     runner = CLIRunner()
     result = runner.invoke(shell.cli, ['foo'])
