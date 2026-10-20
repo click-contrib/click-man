@@ -35,3 +35,16 @@ my-command \- Command to test man pages for click.
 An imaginary description from an indented docstring, with newlines.
 """
     )
+
+
+def test_issue_80():
+    """
+    Test creating a man page for a command without a help text (issue #80)
+    """
+    command = 'my-command'
+    cmd = Command(command)
+    ctx = Context(cmd, info_name=command)
+    man = generate_man_page(ctx, version='1.0.0', date='21-Feb-1994')
+
+    assert '.SH SYNOPSIS' in man
+    assert '.SH DESCRIPTION' not in man
